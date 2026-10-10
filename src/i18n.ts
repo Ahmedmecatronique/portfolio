@@ -2,8 +2,9 @@ export type Lang = 'fr' | 'en'
 
 type Node = { title: string; eyebrow: string; detail: string; metrics: string[] }
 type Project = { subtitle: string; meta: string; description: string; tags: string[] }
-type Experience = { year: string; role: string; meta: string[] }
+type Experience = { year: string; role: string; meta: string[]; desc: string }
 type Row = [period: string, name: string, detail: string, note: string]
+type Engagement = [name: string, period: string, role: string]
 
 export type Content = {
   title: string
@@ -16,9 +17,9 @@ export type Content = {
   projects: { label: string; titleA: string; titleB: string; view: string; items: Project[] }
   certifications: { label: string; titleA: string; titleB: string; items: [date: string, name: string, issuerAndType: string, extra: string][] }
   experience: { label: string; items: Experience[] }
-  education: { label: string; formation: string; engagement: string; formationItems: Row[]; engagementItems: Row[] }
+  education: { label: string; formation: string; engagement: string; formationItems: Row[]; engagementItems: Engagement[] }
   stack: { label: string; titleA: string; titleB: string; toolsWord: string; groups: { name: string; tools: string[] }[] }
-  contact: { label: string; titleA: string; titleB: string; lead: string; location: string; languages: string }
+  contact: { label: string; titleA: string; titleB: string; lead: string; location: string; languages: string; availability: string }
   footer: { text: string }
 }
 
@@ -51,7 +52,7 @@ export const content: Record<Lang, Content> = {
         ['Électronique & hardware embarqué', 'STM32, Altium Designer, KiCad, conception PCB, acquisition IMU, GPS, baromètre et magnétomètre'],
         ['IA & vision par ordinateur', 'YOLO, OpenCV, détection d’objets, vision thermique/RGB, IA embarquée sur Raspberry Pi'],
         ['Automatisation industrielle', 'Siemens TIA Portal, PLC, PLCSIM, capteurs et actionneurs industriels'],
-        ['Systèmes autonomes & robotique', 'ROS, contrôle de drones, cinématique directe/inverse, PID, navigation GPS autonome'],
+        ['Systèmes autonomes & robotique', 'ROS 2 (Humble), contrôle de drones, cinématique directe/inverse, PID, navigation GPS autonome'],
       ],
     },
     system: {
@@ -61,7 +62,7 @@ export const content: Record<Lang, Content> = {
       note: 'Chaque couche du système est pensée comme un organe indépendant, relié par un flux de données continu.',
       nodes: [
         { title: 'Capteurs', eyebrow: '01 / acquisition', detail: 'Le système agrège les signaux de navigation et d’altitude avant chaque cycle de contrôle.', metrics: ['IMU / GPS / Baro', 'Acquisition 100 Hz', 'Fusion multi-capteurs'] },
-        { title: 'STM32', eyebrow: '02 / temps réel', detail: 'Le microcontrôleur exécute les boucles PID et orchestre les commandes critiques de vol.', metrics: ['Boucle PID : 100 Hz', 'Latence UART : < 5 ms', 'Architecture Cortex-M'] },
+        { title: 'STM32', eyebrow: '02 / temps réel', detail: 'Le microcontrôleur exécute les boucles PID et orchestre les commandes critiques de vol.', metrics: ['Firmware temps réel en C', 'Navigation GPS par waypoints', 'Liaison UART vers Raspberry Pi'] },
         { title: 'Raspberry Pi', eyebrow: '03 / mission', detail: 'Le calculateur de mission pilote la détection, les décisions et la supervision de l’autonomie.', metrics: ['Inférence YOLO', 'Mission edge', 'ROS / Python'] },
         { title: 'Actionneurs', eyebrow: '04 / propulsion', detail: 'Les consignes sont distribuées aux ESC et moteurs pour transformer le plan de vol en mouvement.', metrics: ['ESC / moteurs', 'Commande PWM', 'Redondance active'] },
         { title: 'Télémétrie', eyebrow: '05 / supervision', detail: 'Les données de vol remontent vers un dashboard pour observer l’état du véhicule en temps réel.', metrics: ['FastAPI / WebSocket', 'Dashboard live', 'Journalisation mission'] },
@@ -74,19 +75,19 @@ export const content: Record<Lang, Content> = {
       view: 'Voir',
       items: [
         { subtitle: 'Drone VTOL autonome de sauvetage', meta: 'Projet CDIO · ESPRIT · 2025–2026', description: 'Cellule UAV VTOL validée par simulation aéro/structurelle, pile de vol autonome complète, détection IA de victimes (RGB + thermique, seuil 85 %), largage de bouée CO2 automatique.', tags: ['SolidWorks', 'STM32', 'Raspberry Pi', 'YOLO', 'PID', 'FastAPI / WebSocket'] },
-        { subtitle: 'Plateforme R&D · TECHNOZOR', meta: 'Stage R&D · 2 mois · 2026', description: 'Conception d’une cellule UAV, deux variantes avioniques (PixHawk + carte STM32 custom), châssis étanche modulaire pour drone sous-marin autonome et plateforme cloud de supervision multi-UAV.', tags: ['Altium', 'PixHawk', 'STM32 custom', 'AUV', 'Cloud'] },
+        { subtitle: 'Pile de contrôle ROS 2 / STM32', meta: 'Projet personnel · 2025–2026', description: 'Architecture ROS 2 Humble de 10 nœuds (cinématique, trajectoires 100 Hz, sécurité, vision, saisie d’objet), firmware STM32 FreeRTOS + micro-ROS avec PID 1 kHz et génération de pas à 20 kHz sur 6 axes, jumeau numérique 3D et calibration caméra main-œil.', tags: ['ROS 2', 'STM32', 'FreeRTOS', 'micro-ROS', 'PySide6 / OpenGL', 'OpenCV'] },
+        { subtitle: 'Plateforme R&D · TECHNOZOR', meta: 'Stage R&D · 2 mois · 2026', description: 'Conception d’une cellule UAV, deux variantes avioniques (PixHawk + carte STM32 custom), châssis étanche modulaire pour drone sous-marin autonome et contribution à une plateforme cloud de supervision multi-UAV.', tags: ['Altium', 'PixHawk', 'STM32 custom', 'AUV', 'Cloud'] },
         { subtitle: 'Automatisation industrielle · COFICAB', meta: 'Stage · 4 mois · 2024', description: 'Conception et modélisation d’une machine d’irradiation, remplacement d’une procédure manuelle par un contrôle automatisé conforme aux normes de radiation.', tags: ['SolidWorks', 'Raspberry Pi 5', 'Automatisation industrielle'] },
       ],
     },
     experience: {
       label: '05 / Expérience',
-      // TODO: compléter les périodes manquantes (et la ville pour la Société Nouvelle de Liège).
       items: [
-        { year: '2026', role: 'Stagiaire R&D Drones', meta: ['Technozor', 'Tunis', 'Juil.–Août 2026'] },
-        { year: '2025', role: 'Stagiaire Ingénieur', meta: ['STEG', 'Tunis'] }, // TODO: période
-        { year: '2024', role: 'Stagiaire Conception & Automatisation', meta: ['COFICAB', 'Tunis', 'Stage de fin d’études'] }, // TODO: période
-        { year: '2023', role: 'Stagiaire en Automatisation', meta: ['Société Nouvelle de Liège'] }, // TODO: ville, période
-        { year: '2022', role: 'Stage d’initiation, Atelier mécanique', meta: ['Port de Tabarka'] }, // TODO: période
+        { year: '2026', role: 'Stagiaire R&D Drones', meta: ['Technozor', 'Tunis', 'Juil.–Août 2026 (2 mois)'], desc: 'Conception d’une carte de contrôle de vol STM32 custom (Altium, KiCad) et d’une variante PixHawk, mise en service depuis le bare metal et essais en vol. Châssis étanche pour drone sous-marin.' },
+        { year: '2025', role: 'Stagiaire Ingénieur', meta: ['STEG', 'Tunis', '2025 (1,5 mois)'], desc: 'Cartographie du réseau national de distribution électrique (HT / MT / BT, postes de transformation).' },
+        { year: '2024', role: 'Stage pratique, département Maintenance', meta: ['COFICAB', 'Tunis', 'Févr.–Mai 2024 (4 mois)'], desc: 'Conception SolidWorks d’une machine d’irradiation de câbles et automatisation de la procédure (Raspberry Pi 5), conforme aux normes de radiation industrielle.' },
+        { year: '2023', role: 'Stagiaire en Automatisation', meta: ['Société Nouvelle du Liège', 'Tabarka', 'Janv.–Févr. 2023'], desc: 'Systèmes automatiques et programmation d’automates (PLC).' },
+        { year: '2022', role: 'Stage d’initiation', meta: ['Entreprise Mécanique Générale', 'Port de Tabarka', 'Janv.–Févr. 2022'], desc: 'Techniques d’usinage et fabrication mécanique en atelier.' },
       ],
     },
     education: {
@@ -99,8 +100,9 @@ export const content: Record<Lang, Content> = {
         ['2021', 'Lycée de Tabarka', 'Baccalauréat sciences techniques.', ''],
       ],
       engagementItems: [
-        ['2025–2026', 'Club Aéro ESPRIT', 'Vice-président — conception et construction d’avions RC et de drones de compétition', 'Membre depuis 2024'],
-        ['2024–présent', 'IEEE', 'Membre', ''],
+        ['Club Aéro ESPRIT', '2025–2026', 'Vice-président'],
+        ['IEEE', 'Depuis 2024', 'Membre'],
+        ['Club pour enfants', '', 'Formateur Arduino'],
       ],
     },
     certifications: {
@@ -134,11 +136,12 @@ export const content: Record<Lang, Content> = {
     },
     contact: {
       label: '09 / Contact',
-      titleA: 'Travaillons ensemble',
-      titleB: 'sur votre prochain projet.',
-      lead: 'Élève ingénieur en mécatronique, je conçois des systèmes embarqués, robotiques et autonomes. Je suis ouvert aux opportunités de stage, d’emploi et de collaboration.',
+      titleA: 'Construisons la suite',
+      titleB: 'ensemble.',
+      lead: 'Élève ingénieur en mécatronique, je recherche un stage de fin d’études de 6 mois en France, à partir de décembre 2026, en systèmes embarqués, drones ou robotique, idéalement en laboratoire.',
       location: 'Tunis, Tunisie',
       languages: 'Langues : Arabe (natif) · Français (C1) · Anglais (B2)',
+      availability: 'Disponible pour un PFE de 6 mois en France, dès décembre 2026',
     },
     footer: { text: '© 2026 Ahmed Ghfiri · Élève ingénieur en mécatronique & systèmes autonomes' },
   },
@@ -171,7 +174,7 @@ export const content: Record<Lang, Content> = {
         ['Electronics & embedded hardware', 'STM32, Altium Designer, KiCad, PCB design, IMU, GPS, barometer and magnetometer acquisition'],
         ['AI & computer vision', 'YOLO, OpenCV, object detection, thermal/RGB vision, embedded AI on Raspberry Pi'],
         ['Industrial automation', 'Siemens TIA Portal, PLC, PLCSIM, industrial sensors and actuators'],
-        ['Autonomous systems & robotics', 'ROS, drone control, forward/inverse kinematics, PID, autonomous GPS navigation'],
+        ['Autonomous systems & robotics', 'ROS 2 (Humble), drone control, forward/inverse kinematics, PID, autonomous GPS navigation'],
       ],
     },
     system: {
@@ -181,7 +184,7 @@ export const content: Record<Lang, Content> = {
       note: 'Each layer of the system is designed as an independent organ, linked by a continuous data flow.',
       nodes: [
         { title: 'Sensors', eyebrow: '01 / acquisition', detail: 'The system aggregates navigation and altitude signals before each control cycle.', metrics: ['IMU / GPS / Baro', '100 Hz acquisition', 'Multi-sensor fusion'] },
-        { title: 'STM32', eyebrow: '02 / real time', detail: 'The microcontroller runs the PID loops and orchestrates critical flight commands.', metrics: ['PID loop: 100 Hz', 'UART latency: < 5 ms', 'Cortex-M architecture'] },
+        { title: 'STM32', eyebrow: '02 / real time', detail: 'The microcontroller runs the PID loops and orchestrates critical flight commands.', metrics: ['Real-time firmware in C', 'GPS waypoint navigation', 'UART link to Raspberry Pi'] },
         { title: 'Raspberry Pi', eyebrow: '03 / mission', detail: 'The mission computer drives detection, decisions and autonomy supervision.', metrics: ['YOLO inference', 'Edge mission', 'ROS / Python'] },
         { title: 'Actuators', eyebrow: '04 / propulsion', detail: 'Commands are dispatched to the ESCs and motors to turn the flight plan into motion.', metrics: ['ESC / motors', 'PWM control', 'Active redundancy'] },
         { title: 'Telemetry', eyebrow: '05 / supervision', detail: 'Flight data is streamed to a dashboard to monitor the vehicle state in real time.', metrics: ['FastAPI / WebSocket', 'Live dashboard', 'Mission logging'] },
@@ -194,18 +197,19 @@ export const content: Record<Lang, Content> = {
       view: 'View',
       items: [
         { subtitle: 'Autonomous VTOL rescue drone', meta: 'CDIO project · ESPRIT · 2025–2026', description: 'VTOL UAV airframe validated by aerodynamic/structural simulation, complete autonomous flight stack, AI victim detection (RGB + thermal, 85% threshold), automatic CO2 buoy release.', tags: ['SolidWorks', 'STM32', 'Raspberry Pi', 'YOLO', 'PID', 'FastAPI / WebSocket'] },
-        { subtitle: 'R&D platform · TECHNOZOR', meta: 'R&D internship · 2 months · 2026', description: 'Design of a UAV airframe, two avionics variants (PixHawk + custom STM32 board), a modular waterproof chassis for an autonomous underwater drone, and a cloud platform for multi-UAV supervision.', tags: ['Altium', 'PixHawk', 'Custom STM32', 'AUV', 'Cloud'] },
+        { subtitle: 'ROS 2 / STM32 control stack', meta: 'Personal project · 2025–2026', description: 'ROS 2 Humble architecture of 10 nodes (kinematics, 100 Hz trajectories, safety, vision, object grasping), STM32 FreeRTOS + micro-ROS firmware with 1 kHz PID and 20 kHz step generation on 6 axes, 3D digital twin and hand-eye camera calibration.', tags: ['ROS 2', 'STM32', 'FreeRTOS', 'micro-ROS', 'PySide6 / OpenGL', 'OpenCV'] },
+        { subtitle: 'R&D platform · TECHNOZOR', meta: 'R&D internship · 2 months · 2026', description: 'Design of a UAV airframe, two avionics variants (PixHawk + custom STM32 board), a modular waterproof chassis for an autonomous underwater drone, and contribution to a cloud platform for multi-UAV supervision.', tags: ['Altium', 'PixHawk', 'Custom STM32', 'AUV', 'Cloud'] },
         { subtitle: 'Industrial automation · COFICAB', meta: 'Internship · 4 months · 2024', description: 'Design and modelling of an irradiation machine, replacing a manual procedure with automated control compliant with radiation standards.', tags: ['SolidWorks', 'Raspberry Pi 5', 'Industrial automation'] },
       ],
     },
     experience: {
       label: '05 / Experience',
       items: [
-        { year: '2026', role: 'Drone R&D Intern', meta: ['Technozor', 'Tunis', 'Jul.–Aug. 2026'] },
-        { year: '2025', role: 'Engineering Intern', meta: ['STEG', 'Tunis'] },
-        { year: '2024', role: 'Design & Automation Intern', meta: ['COFICAB', 'Tunis', 'Final-year internship'] },
-        { year: '2023', role: 'Automation Intern', meta: ['Société Nouvelle de Liège'] },
-        { year: '2022', role: 'Introductory internship, Machine shop', meta: ['Port of Tabarka'] },
+        { year: '2026', role: 'Drone R&D Intern', meta: ['Technozor', 'Tunis', 'Jul.–Aug. 2026 (2 months)'], desc: 'Designed a custom STM32 flight-controller board (Altium, KiCad) and a PixHawk variant, brought them up from bare metal and ran flight tests. Waterproof chassis for an underwater drone.' },
+        { year: '2025', role: 'Engineering Intern', meta: ['STEG', 'Tunis', '2025 (1.5 months)'], desc: 'Mapping of the national electricity distribution network (HV / MV / LV, transformer substations).' },
+        { year: '2024', role: 'Work placement, Maintenance department', meta: ['COFICAB', 'Tunis', 'Feb.–May 2024 (4 months)'], desc: 'SolidWorks design of a cable irradiation machine and automation of the procedure (Raspberry Pi 5), compliant with industrial radiation standards.' },
+        { year: '2023', role: 'Automation Intern', meta: ['Société Nouvelle du Liège', 'Tabarka', 'Jan.–Feb. 2023'], desc: 'Automated systems and PLC programming.' },
+        { year: '2022', role: 'Introductory internship', meta: ['Entreprise Mécanique Générale', 'Port of Tabarka', 'Jan.–Feb. 2022'], desc: 'Machining techniques and mechanical manufacturing in a workshop.' },
       ],
     },
     education: {
@@ -218,8 +222,9 @@ export const content: Record<Lang, Content> = {
         ['2021', 'Tabarka High School', 'Baccalaureate in technical sciences.', ''],
       ],
       engagementItems: [
-        ['2025–2026', 'ESPRIT Aero Club', 'Vice-president — design and build of RC aircraft and competition drones', 'Member since 2024'],
-        ['2024–present', 'IEEE', 'Member', ''],
+        ['ESPRIT Aero Club', '2025–2026', 'Vice-president'],
+        ['IEEE', 'Since 2024', 'Member'],
+        ['Children’s club', '', 'Arduino instructor'],
       ],
     },
     certifications: {
@@ -253,11 +258,12 @@ export const content: Record<Lang, Content> = {
     },
     contact: {
       label: '09 / Contact',
-      titleA: 'Let’s work together',
-      titleB: 'on your next project.',
-      lead: 'Mechatronics engineering student, I design embedded, robotic and autonomous systems. I’m open to internship, job and collaboration opportunities.',
+      titleA: 'Let’s build what’s next',
+      titleB: 'together.',
+      lead: 'Mechatronics engineering student, I am looking for a 6-month final-year internship in France, starting December 2026, in embedded systems, drones or robotics, ideally in a research lab.',
       location: 'Tunis, Tunisia',
       languages: 'Languages: Arabic (native) · French (C1) · English (B2)',
+      availability: 'Available for a 6-month final-year project in France from December 2026',
     },
     footer: { text: '© 2026 Ahmed Ghfiri · Mechatronics & Autonomous Systems Engineering Student' },
   },
