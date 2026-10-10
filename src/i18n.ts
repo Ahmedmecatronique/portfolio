@@ -1,6 +1,6 @@
 export type Lang = 'fr' | 'en'
 
-type Node = { title: string; eyebrow: string; detail: string; metrics: string[] }
+type Node = { title: string; detail: string; metrics: string[] }
 type Project = { subtitle: string; meta: string; description: string; tags: string[] }
 type Experience = { year: string; role: string; meta: string[]; desc: string }
 type Row = [period: string, name: string, detail: string, note: string]
@@ -11,15 +11,15 @@ export type Content = {
   nav: Record<'home' | 'about' | 'expertise' | 'projects' | 'experience' | 'education' | 'certifications' | 'contact', string>
   ui: { switchLang: string; toLight: string; toDark: string; openMenu: string; closeMenu: string }
   hero: { titleA: string; titleB: string; taglineA: string; taglineB: string }
-  about: { label: string; displayPre: string; displayHighlight: string; displayLine2: string; p1: string; p2: string; signatureRole: string }
-  expertise: { label: string; titleA: string; titleB: string; items: [title: string, desc: string][] }
-  system: { label: string; titleA: string; titleB: string; note: string; nodes: Node[] }
-  projects: { label: string; titleA: string; titleB: string; view: string; items: Project[] }
-  certifications: { label: string; titleA: string; titleB: string; items: [date: string, name: string, issuerAndType: string, extra: string][] }
-  experience: { label: string; items: Experience[] }
-  education: { label: string; formation: string; engagement: string; formationItems: Row[]; engagementItems: Engagement[] }
-  stack: { label: string; titleA: string; titleB: string; toolsWord: string; groups: { name: string; tools: string[] }[] }
-  contact: { label: string; titleA: string; titleB: string; lead: string; location: string; languages: string; availability: string }
+  about: { displayPre: string; displayHighlight: string; displayLine2: string; p1: string; p2: string; signatureRole: string }
+  expertise: { titleA: string; titleB: string; items: [title: string, desc: string][] }
+  system: { titleA: string; titleB: string; note: string; nodes: Node[] }
+  projects: { titleA: string; titleB: string; view: string; items: Project[] }
+  certifications: { titleA: string; titleB: string; items: [date: string, name: string, issuerAndType: string, extra: string][] }
+  experience: { items: Experience[] }
+  education: { formation: string; engagement: string; formationItems: Row[]; engagementItems: Engagement[] }
+  stack: { titleA: string; titleB: string; toolsWord: string; groups: { name: string; tools: string[] }[] }
+  contact: { titleA: string; titleB: string; lead: string; location: string; languages: string; availability: string }
   footer: { text: string }
 }
 
@@ -35,7 +35,6 @@ export const content: Record<Lang, Content> = {
       taglineB: 'construire ce qui n’existe pas encore',
     },
     about: {
-      label: '01 / À propos',
       displayPre: 'Je donne une forme ',
       displayHighlight: 'physique',
       displayLine2: 'aux systèmes intelligents.',
@@ -44,7 +43,6 @@ export const content: Record<Lang, Content> = {
       signatureRole: '— ingénieur en devenir',
     },
     expertise: {
-      label: '02 / Expertise',
       titleA: 'Les outils',
       titleB: 'du mouvement.',
       items: [
@@ -56,20 +54,18 @@ export const content: Record<Lang, Content> = {
       ],
     },
     system: {
-      label: '03 / Système AquaWing',
       titleA: 'Une mission,',
       titleB: 'cinq couches.',
       note: 'Chaque couche du système est pensée comme un organe indépendant, relié par un flux de données continu.',
       nodes: [
-        { title: 'Capteurs', eyebrow: '01 / acquisition', detail: 'Le système agrège les signaux de navigation et d’altitude avant chaque cycle de contrôle.', metrics: ['IMU / GPS / Baro', 'Acquisition 100 Hz', 'Fusion multi-capteurs'] },
-        { title: 'STM32', eyebrow: '02 / temps réel', detail: 'Le microcontrôleur exécute les boucles PID et orchestre les commandes critiques de vol.', metrics: ['Firmware temps réel en C', 'Navigation GPS par waypoints', 'Liaison UART vers Raspberry Pi'] },
-        { title: 'Raspberry Pi', eyebrow: '03 / mission', detail: 'Le calculateur de mission pilote la détection, les décisions et la supervision de l’autonomie.', metrics: ['Inférence YOLO', 'Mission edge', 'ROS / Python'] },
-        { title: 'Actionneurs', eyebrow: '04 / propulsion', detail: 'Les consignes sont distribuées aux ESC et moteurs pour transformer le plan de vol en mouvement.', metrics: ['ESC / moteurs', 'Commande PWM', 'Redondance active'] },
-        { title: 'Télémétrie', eyebrow: '05 / supervision', detail: 'Les données de vol remontent vers un dashboard pour observer l’état du véhicule en temps réel.', metrics: ['FastAPI / WebSocket', 'Dashboard live', 'Journalisation mission'] },
+        { title: 'Capteurs', detail: 'Le système agrège les signaux de navigation et d’altitude avant chaque cycle de contrôle.', metrics: ['IMU / GPS / Baro', 'Acquisition 100 Hz', 'Fusion multi-capteurs'] },
+        { title: 'STM32', detail: 'Le microcontrôleur exécute les boucles PID et orchestre les commandes critiques de vol.', metrics: ['Firmware temps réel en C', 'Navigation GPS par waypoints', 'Liaison UART vers Raspberry Pi'] },
+        { title: 'Raspberry Pi', detail: 'Le calculateur de mission pilote la détection, les décisions et la supervision de l’autonomie.', metrics: ['Inférence YOLO', 'Mission edge', 'ROS / Python'] },
+        { title: 'Actionneurs', detail: 'Les consignes sont distribuées aux ESC et moteurs pour transformer le plan de vol en mouvement.', metrics: ['ESC / moteurs', 'Commande PWM', 'Redondance active'] },
+        { title: 'Télémétrie', detail: 'Les données de vol remontent vers un dashboard pour observer l’état du véhicule en temps réel.', metrics: ['FastAPI / WebSocket', 'Dashboard live', 'Journalisation mission'] },
       ],
     },
     projects: {
-      label: '04 / Projets phares',
       titleA: 'Du concept',
       titleB: 'au terrain.',
       view: 'Voir',
@@ -81,7 +77,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     experience: {
-      label: '05 / Expérience',
       items: [
         { year: '2026', role: 'Stagiaire R&D Drones', meta: ['Technozor', 'Tunis', 'Juil.–Août 2026 (2 mois)'], desc: 'Conception d’une carte de contrôle de vol STM32 custom (Altium, KiCad) et d’une variante PixHawk, mise en service depuis le bare metal et essais en vol. Châssis étanche pour drone sous-marin.' },
         { year: '2025', role: 'Stagiaire Ingénieur', meta: ['STEG', 'Tunis', '2025 (1,5 mois)'], desc: 'Cartographie du réseau national de distribution électrique (HT / MT / BT, postes de transformation).' },
@@ -91,7 +86,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     education: {
-      label: '06 / Formation & engagement',
       formation: 'Formation académique',
       engagement: 'Engagement',
       formationItems: [
@@ -106,7 +100,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     certifications: {
-      label: '07 / Certifications',
       titleA: 'Certifications',
       titleB: 'et formations.',
       items: [
@@ -118,7 +111,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     stack: {
-      label: '08 / Stack technique',
       titleA: 'Stack',
       titleB: 'technique',
       toolsWord: 'outils',
@@ -135,7 +127,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     contact: {
-      label: '09 / Contact',
       titleA: 'Construisons la suite',
       titleB: 'ensemble.',
       lead: 'Élève ingénieur en mécatronique, je recherche un stage de fin d’études de 6 mois en France, à partir de décembre 2026, en systèmes embarqués, drones ou robotique, idéalement en laboratoire.',
@@ -157,7 +148,6 @@ export const content: Record<Lang, Content> = {
       taglineB: 'build what doesn’t exist yet',
     },
     about: {
-      label: '01 / About',
       displayPre: 'I give a ',
       displayHighlight: 'physical',
       displayLine2: 'form to intelligent systems.',
@@ -166,7 +156,6 @@ export const content: Record<Lang, Content> = {
       signatureRole: '— engineer in the making',
     },
     expertise: {
-      label: '02 / Expertise',
       titleA: 'The tools',
       titleB: 'of motion.',
       items: [
@@ -178,20 +167,18 @@ export const content: Record<Lang, Content> = {
       ],
     },
     system: {
-      label: '03 / AquaWing system',
       titleA: 'One mission,',
       titleB: 'five layers.',
       note: 'Each layer of the system is designed as an independent organ, linked by a continuous data flow.',
       nodes: [
-        { title: 'Sensors', eyebrow: '01 / acquisition', detail: 'The system aggregates navigation and altitude signals before each control cycle.', metrics: ['IMU / GPS / Baro', '100 Hz acquisition', 'Multi-sensor fusion'] },
-        { title: 'STM32', eyebrow: '02 / real time', detail: 'The microcontroller runs the PID loops and orchestrates critical flight commands.', metrics: ['Real-time firmware in C', 'GPS waypoint navigation', 'UART link to Raspberry Pi'] },
-        { title: 'Raspberry Pi', eyebrow: '03 / mission', detail: 'The mission computer drives detection, decisions and autonomy supervision.', metrics: ['YOLO inference', 'Edge mission', 'ROS / Python'] },
-        { title: 'Actuators', eyebrow: '04 / propulsion', detail: 'Commands are dispatched to the ESCs and motors to turn the flight plan into motion.', metrics: ['ESC / motors', 'PWM control', 'Active redundancy'] },
-        { title: 'Telemetry', eyebrow: '05 / supervision', detail: 'Flight data is streamed to a dashboard to monitor the vehicle state in real time.', metrics: ['FastAPI / WebSocket', 'Live dashboard', 'Mission logging'] },
+        { title: 'Sensors', detail: 'The system aggregates navigation and altitude signals before each control cycle.', metrics: ['IMU / GPS / Baro', '100 Hz acquisition', 'Multi-sensor fusion'] },
+        { title: 'STM32', detail: 'The microcontroller runs the PID loops and orchestrates critical flight commands.', metrics: ['Real-time firmware in C', 'GPS waypoint navigation', 'UART link to Raspberry Pi'] },
+        { title: 'Raspberry Pi', detail: 'The mission computer drives detection, decisions and autonomy supervision.', metrics: ['YOLO inference', 'Edge mission', 'ROS / Python'] },
+        { title: 'Actuators', detail: 'Commands are dispatched to the ESCs and motors to turn the flight plan into motion.', metrics: ['ESC / motors', 'PWM control', 'Active redundancy'] },
+        { title: 'Telemetry', detail: 'Flight data is streamed to a dashboard to monitor the vehicle state in real time.', metrics: ['FastAPI / WebSocket', 'Live dashboard', 'Mission logging'] },
       ],
     },
     projects: {
-      label: '04 / Featured projects',
       titleA: 'From concept',
       titleB: 'to the field.',
       view: 'View',
@@ -203,7 +190,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     experience: {
-      label: '05 / Experience',
       items: [
         { year: '2026', role: 'Drone R&D Intern', meta: ['Technozor', 'Tunis', 'Jul.–Aug. 2026 (2 months)'], desc: 'Designed a custom STM32 flight-controller board (Altium, KiCad) and a PixHawk variant, brought them up from bare metal and ran flight tests. Waterproof chassis for an underwater drone.' },
         { year: '2025', role: 'Engineering Intern', meta: ['STEG', 'Tunis', '2025 (1.5 months)'], desc: 'Mapping of the national electricity distribution network (HV / MV / LV, transformer substations).' },
@@ -213,7 +199,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     education: {
-      label: '06 / Education & involvement',
       formation: 'Academic background',
       engagement: 'Involvement',
       formationItems: [
@@ -228,7 +213,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     certifications: {
-      label: '07 / Certifications',
       titleA: 'Certifications',
       titleB: 'and training.',
       items: [
@@ -240,7 +224,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     stack: {
-      label: '08 / Tech stack',
       titleA: 'Tech',
       titleB: 'stack',
       toolsWord: 'tools',
@@ -257,7 +240,6 @@ export const content: Record<Lang, Content> = {
       ],
     },
     contact: {
-      label: '09 / Contact',
       titleA: 'Let’s build what’s next',
       titleB: 'together.',
       lead: 'Mechatronics engineering student, I am looking for a 6-month final-year internship in France, starting December 2026, in embedded systems, drones or robotics, ideally in a research lab.',

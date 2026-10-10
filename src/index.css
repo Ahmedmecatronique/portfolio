@@ -74,12 +74,11 @@ button { font: inherit; }
 main, footer { position: relative; }
 
 /* ===== Monospace: navigation, section numbers and small decorative labels only ===== */
-.section-label, .skill-number, .project-index, .system-node small, .detail-top,
+.skill-number, .project-index, .system-node small, .detail-top,
 .education-grid h3, .stack-title {
   font-family: var(--font-mono); font-size: var(--fs-label); font-weight: 500;
   letter-spacing: var(--label-tracking); text-transform: uppercase;
 }
-.section-label { color: var(--muted); }
 
 /* ===== Navigation ===== */
 .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 74px; padding: 0 var(--gutter); border-bottom: 1px solid var(--separator); background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(15px); }
@@ -160,7 +159,7 @@ h2 span, .display-copy span { color: var(--accent); font-style: normal; }
 .system-node strong { display: block; font-size: var(--fs-secondary); white-space: nowrap; }
 .node-connector { position: absolute; z-index: -1; top: 27px; left: calc(50% + 28px); width: calc(100% - 56px); height: 1px; background: var(--line); }
 .node-detail { padding: 30px; border: 1px solid var(--line); background: var(--surface); }
-.detail-top { display: flex; justify-content: space-between; color: var(--accent); }
+.detail-top { display: flex; justify-content: flex-end; color: var(--accent); }
 .node-detail h3 { margin: 24px 0 10px; font-size: 1.6rem; letter-spacing: var(--title-tracking); }
 .node-detail p { margin: 0 0 20px; color: var(--text-2); font-size: var(--fs-body); line-height: var(--lh-body); }
 .metric-list { display: grid; gap: 8px; color: var(--text); font-size: var(--fs-secondary); }
