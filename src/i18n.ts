@@ -8,7 +8,7 @@ type Row = [period: string, name: string, detail: string, note: string]
 export type Content = {
   title: string
   nav: Record<'home' | 'about' | 'expertise' | 'projects' | 'experience' | 'education' | 'certifications' | 'contact', string>
-  ui: { switchLang: string; toLight: string; toDark: string }
+  ui: { switchLang: string; toLight: string; toDark: string; openMenu: string; closeMenu: string }
   hero: { titleA: string; titleB: string; taglineA: string; taglineB: string }
   about: { label: string; displayPre: string; displayHighlight: string; displayLine2: string; p1: string; p2: string; signatureRole: string }
   expertise: { label: string; titleA: string; titleB: string; items: [title: string, desc: string][] }
@@ -26,7 +26,7 @@ export const content: Record<Lang, Content> = {
   fr: {
     title: 'Ahmed Ghfiri | Mécatronique & Systèmes autonomes',
     nav: { home: 'Accueil', about: 'À propos', expertise: 'Expertise', projects: 'Projets', experience: 'Expérience', education: 'Formation', certifications: 'Certifications', contact: 'Contact' },
-    ui: { switchLang: 'Switch to English', toLight: 'Passer en mode clair', toDark: 'Passer en mode sombre' },
+    ui: { switchLang: 'Switch to English', toLight: 'Passer en mode clair', toDark: 'Passer en mode sombre', openMenu: 'Ouvrir le menu', closeMenu: 'Fermer le menu' },
     hero: {
       titleA: 'Élève ingénieur',
       titleB: 'Mécatronique',
@@ -146,7 +146,7 @@ export const content: Record<Lang, Content> = {
   en: {
     title: 'Ahmed Ghfiri | Mechatronics & Autonomous Systems',
     nav: { home: 'Home', about: 'About', expertise: 'Expertise', projects: 'Projects', experience: 'Experience', education: 'Education', certifications: 'Certifications', contact: 'Contact' },
-    ui: { switchLang: 'Passer en français', toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
+    ui: { switchLang: 'Passer en français', toLight: 'Switch to light mode', toDark: 'Switch to dark mode', openMenu: 'Open menu', closeMenu: 'Close menu' },
     hero: {
       titleA: 'Mechatronics',
       titleB: 'Engineering Student',

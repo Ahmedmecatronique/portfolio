@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   Activity, ArrowUpRight, Bot, ChevronDown, Cpu, Crosshair,
-  MapPin, Moon, Radio, Sun, Zap,
+  MapPin, Menu, Moon, Radio, Sun, X, Zap,
 } from 'lucide-react'
 import { content, type Lang } from './i18n'
 
@@ -174,7 +174,25 @@ function App() {
   const toggleGroup = (i: number) => setOpenGroups(g => g.includes(i) ? g.filter(x => x !== i) : [...g, i])
   const [activeNode, setActiveNode] = useState(1)
   const [activeSection, setActiveSection] = useState('home')
+  const [menuOpen, setMenuOpen] = useState(false)
   const t = content[lang]
+
+  // Mobile menu: lock page scroll while open, close on Escape or when the screen
+  // grows past the breakpoint where the regular centered menu is shown again.
+  useEffect(() => {
+    if (!menuOpen) return
+    document.body.style.overflow = 'hidden'
+    const wide = window.matchMedia('(min-width: 1101px)')
+    const close = () => setMenuOpen(false)
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
+    window.addEventListener('keydown', onKey)
+    wide.addEventListener('change', close)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+      wide.removeEventListener('change', close)
+    }
+  }, [menuOpen])
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -207,8 +225,12 @@ function App() {
         <div className="topbar-actions">
           <button type="button" className="icon-toggle" onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')} aria-label={t.ui.switchLang} title={t.ui.switchLang}>{lang === 'fr' ? 'EN' : 'FR'}</button>
           <button type="button" className="icon-toggle" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={themeLabel} title={themeLabel}>{theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}</button>
+          <button type="button" className="icon-toggle menu-toggle" onClick={() => setMenuOpen(o => !o)} aria-expanded={menuOpen} aria-controls="mobile-menu" aria-label={menuOpen ? t.ui.closeMenu : t.ui.openMenu} title={menuOpen ? t.ui.closeMenu : t.ui.openMenu}>{menuOpen ? <X size={18} /> : <Menu size={18} />}</button>
         </div>
       </header>
+      <nav id="mobile-menu" className={`mobile-menu${menuOpen ? ' is-open' : ''}`} inert={!menuOpen} aria-label="Menu">
+        {navIds.map(id => <a key={id} href={`#${id}`} className={activeSection === id ? 'active' : ''} onClick={() => setMenuOpen(false)}>{t.nav[id]}</a>)}
+      </nav>
       <main id="top">
         <section id="home" className="intro-section section-wrap">
           <div className="intro-left reveal">
